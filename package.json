@@ -1,0 +1,22 @@
+{
+  "name": "image-picker-component",
+  "version": "0.1.0",
+  "description": "Web component based image picker for web, with customizable upload backend.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Burak Tamturk <buraktamturk@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/buraktamturk/image-picker-component.git"
+  },
+  "dependencies": {
+    "file-dialog": "0.0.7",
+    "modal-cropper": "^1.2.0"
+  },
+  "peerDependencies": {
+    "upload-controller-factory": "^0.1.0"
+  }
+}
