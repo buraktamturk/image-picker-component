@@ -17,7 +17,7 @@
   }
 
   .crop-root > .area-root {
-    background: #625D5D;
+    background: #EAEDED;
     position: relative;
     text-align: center;
     font-size: 13pt;
@@ -34,7 +34,7 @@
 
   .info {
     display: table;
-    color:white;
+    color:#797D7F;
     text-decoration: none;
     width: 100%;
     height: 100%;
@@ -86,28 +86,36 @@
   }
 
   a.upload-btn {
-    background-color: #59E817;
+    background-color: #626567;
+    border:solid 1px #FFF;
     color: #FFF;
   }
 
+  a.upload-btn svg {
+    margin-bottom: 3px;
+  }
+
   a.cancel-btn {
-    background-color: #E56717;
+    background-color: #E74C3C;
     color: #FFF;
+    border:solid 1px #FFF;
     display: block;
   }
 
   a.cancel-btn svg {
     height: 14px;
     width: 16px;
+    margin-bottom: 3px;
   }
 
   a.pending-btn {
     color: #FFF;
-    background-color: #F62817;
+    background-color: #E74C3C;
+    border:solid 1px #FFF;
   }
 
   a.pending-btn svg {
-
+    margin-bottom: 3px;
   }
 
   a svg {
@@ -240,19 +248,20 @@
             obj[MakeUploadController.srcKey] = this.hasAttribute('src') && this.getAttribute('src').length && this.getAttribute('src');
 
             this.$controller = MakeUploadController(obj);
-            this.$controller.addListener(this.listenerFnc);
           }
+
+          this.$controller.addListener(this.listenerFnc);
         }
 
         setController(controller) {
           if(this.$controller) {
-            this.$controller.removeListener(this.listenerFnc);
+            this.isConnected && this.$controller.removeListener(this.listenerFnc);
           }
 
           this.$controller = controller;
 
           if(this.$controller) {
-            this.$controller.addListener(this.listenerFnc);
+            this.isConnected && this.$controller.addListener(this.listenerFnc);
           }
         }
 
@@ -292,13 +301,18 @@
 
         disconnectedCallback() {
           this.$controller.removeListener(this.listenerFnc);
+
+          if(this.hiddenInput) {
+            this.hiddenInput.parentNode.removeChild(this.hiddenInput);
+            this.hiddenInput = null;
+          }
         }
 
         updateRatio() {
           var width = Number(this.getAttribute('width')),
               height = Number(this.getAttribute('height'));
 
-          if(this.$width != width && this.$height != height) {
+          if(this.$width !== width || this.$height !== height) {
             this.$width = width;
             this.$height = height;
 
@@ -515,20 +529,22 @@
         }
     
         attributeChangedCallback(name, oldValue, newValue) {
-          switch(name) {
-            case "width":
-            case "height":
-              this.updateRatio();
-            break;
-            case "value":
-            case "src":
-      //        this.updateData();
-            break;
-            case "name":
-              if(this.hiddenInput) {
-                this.hiddenInput.name = newValue;
-              }
-            break;
+          if(this.isConnected) {
+            switch(name) {
+              case "width":
+              case "height":
+                this.updateRatio();
+              break;
+              case "value":
+              case "src":
+        //        this.updateData();
+              break;
+              case "name":
+                if(this.hiddenInput) {
+                  this.hiddenInput.name = newValue;
+                }
+              break;
+            }
           }
         }
       }

@@ -1,6 +1,6 @@
 {
   "name": "image-picker-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Web component based image picker for web, with customizable upload backend.",
   "main": "index.js",
   "scripts": {
